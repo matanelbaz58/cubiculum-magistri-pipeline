@@ -21,7 +21,7 @@ pipeline {
         stage('Spell check') {
             when { branch 'develop' }
             steps {
-                sh 'pip install --user --quiet codespell==2.3.0'
+                sh 'pip install --user --quiet --break-system-packages codespell==2.3.0'
                 sh 'python -m codespell app/'
             }
         }
@@ -29,7 +29,7 @@ pipeline {
         stage('Lint') {
             when { branch 'develop' }
             steps {
-                sh 'pip install --user --quiet ruff==0.6.9'
+                sh 'pip install --user --quiet --break-system-packages ruff==0.6.9'
                 sh 'python -m ruff check app/'
             }
         }
@@ -37,7 +37,7 @@ pipeline {
         stage('Test') {
             when { branch 'develop' }
             steps {
-                sh 'pip install --user --quiet -r requirements.txt'
+                sh 'pip install --user --quiet --break-system-packages -r requirements.txt'
                 sh 'python -m pytest app/tests'
             }
         }
