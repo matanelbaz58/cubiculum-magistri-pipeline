@@ -18,15 +18,28 @@ pipeline {
             steps { checkout scm }
         }
 
-        stage('Spell check') {
-            when { branch 'develop' }
-            steps {
-                sh 'python3 -m pip install --user --quiet --break-system-packages codespell==2.3.0'
-                export PATH="/home/jenkins/.local/bin:$PATH"
-                codespell app/
-            }
-        }
+    stage('Spell check') {
+        when { branch 'develop' }
+         steps {
+        sh '''
+            whoami
+            echo "HOME=$HOME"
+            which python3
+            python3 --version
+            python3 -m pip --version
 
+            python3 -m pip install --user --quiet --break-system-packages codespell==2.3.0
+
+            echo "After install:"
+            ls -la /home/jenkins/.local/bin || true
+            export PATH="/home/jenkins/.local/bin:$PATH"
+            which codespell || true
+            codespell --version
+
+            codespell app/
+        '''
+    }
+}
         stage('Lint') {
             when { branch 'develop' }
             steps {
