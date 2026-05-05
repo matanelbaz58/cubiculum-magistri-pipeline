@@ -43,19 +43,23 @@ pipeline {
         stage('Lint') {
             when { branch 'develop' }
             steps {
-                sh 'python3 -m pip install ---quiet --break-system-packages -user  ruff==0.6.9'
-                export PATH="/home/jenkins/.local/bin:$PATH"
-                ruff check app/
-             }
+                sh '''
+                    python3 -m pip install --user --quiet --break-system-packages ruff==0.6.9
+                    export PATH="/home/jenkins/.local/bin:$PATH"
+                    ruff check app/
+                '''
+            }
         }
 
         stage('Test') {
             when { branch 'develop' }
             steps {
-                sh 'python3 -m pip install --user --quiet --break-system-packages -r requirements.txt'
-                export PATH="/home/jenkins/.local/bin:$PATH"
-                pytest app/tests
-        }
+                sh '''
+                    python3 -m pip install --user --quiet --break-system-packages -r requirements.txt
+                    export PATH="/home/jenkins/.local/bin:$PATH"
+                    pytest app/tests
+                '''
+            }
         }
 
         stage('Build & push') {
