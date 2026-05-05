@@ -22,7 +22,7 @@ pipeline {
             when { branch 'develop' }
             steps {
                 sh 'pip install --user --quiet --break-system-packages codespell==2.3.0'
-                sh 'python -m codespell app/'
+                sh 'python3 -m codespell app/'
             }
         }
 
@@ -30,7 +30,7 @@ pipeline {
             when { branch 'develop' }
             steps {
                 sh 'pip install --user --quiet --break-system-packages ruff==0.6.9'
-                sh 'python -m ruff check app/'
+                sh 'python3 -m ruff check app/'
             }
         }
 
@@ -38,7 +38,7 @@ pipeline {
             when { branch 'develop' }
             steps {
                 sh 'pip install --user --quiet --break-system-packages -r requirements.txt'
-                sh 'python -m pytest app/tests'
+                sh 'python3 -m pytest app/tests'
             }
         }
 
