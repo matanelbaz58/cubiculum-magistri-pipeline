@@ -21,25 +21,28 @@ pipeline {
         stage('Spell check') {
             when { branch 'develop' }
             steps {
-                sh 'python3 -m pip install --user  codespell==2.3.0'
-                sh 'python3 -m codespell app/'
+                sh 'python3 -m pip install --user --quiet --break-system-packages codespell==2.3.0'
+                export PATH="/home/jenkins/.local/bin:$PATH"
+                codespell app/
             }
         }
 
         stage('Lint') {
             when { branch 'develop' }
             steps {
-                sh 'python3 -m pip install --user  ruff==0.6.9'
-                sh 'python3 -m ruff check app/'
-            }
+                sh 'python3 -m pip install ---quiet --break-system-packages -user  ruff==0.6.9'
+                export PATH="/home/jenkins/.local/bin:$PATH"
+                ruff check app/
+             }
         }
 
         stage('Test') {
             when { branch 'develop' }
             steps {
-                sh 'python3 -m pip install --user -r requirements.txt'
-                sh 'python3 -m pytest app/tests'
-            }
+                sh 'python3 -m pip install --user --quiet --break-system-packages -r requirements.txt'
+                export PATH="/home/jenkins/.local/bin:$PATH"
+                pytest app/tests
+        }
         }
 
         stage('Build & push') {
