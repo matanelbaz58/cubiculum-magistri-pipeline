@@ -10,7 +10,7 @@ pipeline {
     }
 
     environment {
-        IMAGE = 'your-dockerhub-user/cubiculum-magistri-app'
+        IMAGE = 'matanelbaz58/cubiculum-magistri-app'
     }
 
     stages {
