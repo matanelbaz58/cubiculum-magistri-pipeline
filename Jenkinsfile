@@ -10,7 +10,7 @@ pipeline {
     }
 
     environment {
-        IMAGE = 'matanelbaz58/cubiculum-magistri-app'
+        IMAGE = 'melbaz58/cubiculum-magistri-app'
     }
 
     stages {
